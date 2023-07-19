@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'
+      xmlns:h='http://xmlns.jcp.org/jsf/html'
+      xmlns:f='http://xmlns.jcp.org/jsf/core'
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p='http://primefaces.org/ui'>
+
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <title>Demande de crédit</title>
+    <h:outputStylesheet library="primefaces" name="theme.css" />
+
+ <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        fieldset {
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+
+        legend {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .form-row label {
+            width: 150px;
+            font-weight: bold;
+        }
+
+        .form-row input,
+        .form-row select {
+            flex: 1;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .attachment-icon {
+            font-size: 18px;
+            color: #999;
+            cursor: pointer;
+        }
+
+        .attachment-icon:hover {
+            color: #555;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        .logout-bar {
+            background-color: #f2f2f2;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout-bar .user-name {
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .logout-bar .logout-button {
+            background-color: #f44336;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .logout-bar .logout-button:hover {
+            background-color: #d32f2f;
+        }
+        
+        .flex-1 {
+            flex: 1;
+        }
+    </style>
+
+</h:head>
+
+
+
+<h:body>
+
+   <div class="container">
+        <div class="logout-bar">
+            <h:outputText styleClass="user-name" value="Bienvenue, #{loginBean.email}" />
+            <h:form>
+                <h:commandButton styleClass="logout-button" value="Déconnexion" action="#{loginBean.logout}" />
+            </h:form>
+        </div>
+           <h1>Demande de crédit</h1>
+    <h:form id="demandeForm" enctype="multipart/form-data">
+        <h:messages globalOnly="true" style="color: red; display: block;" />
+
+      <fieldset>
+                <legend>Informations client</legend>
+
+        <div class="form-row">
+            <p:outputLabel for="cin" value="N° CIN:" style="width: 80px;" />
+            <p:inputText id="cin" value="#{DemandeBean.cin}"   >
+                <p:ajax event="keyup" listener="#{DemandeBean.onCinSelect}" update="nom prenom dateNaissance situationFamiliale compte" />
+            </p:inputText>
+            <h:message for="cin" style="color: red;" />
+
+            <p:outputLabel for="nom" value="Nom:" styleClass="label" />
+            <p:inputText id="nom" value="#{DemandeBean.nom}" required="true" requiredMessage="Le nom est obligatoire !"
+                         validatorMessage="Le nom est trop court."   disabled="#{DemandeBean.disableNomInput}" >
+                <p:ajax event="blur" update="nomMessage" />
+                <f:validateLength minimum="3" maximum="20" />
+                <f:validateRegex pattern="^[^0-9]+$" />
+            </p:inputText>
+            <p:message id="nomMessage" for="nom" style="color: red;" />
+
+
+
+            <p:outputLabel for="prenom" value="Prénom:" styleClass="label" />
+            <p:inputText id="prenom" value="#{DemandeBean.prenom}" required="true" requiredMessage="Le prénom est obligatoire !"
+                         validatorMessage="Le prénom est trop court."    disabled="#{DemandeBean.disablePrenomInput}" >
+                <p:ajax event="blur" update="prenomMessage" />
+                <f:validateLength minimum="3" maximum="20" />
+                <f:validateRegex pattern="^[^0-9]+$" />
+            </p:inputText>
+            <p:message id="prenomMessage" for="prenom" style="color: red;" />
+        </div>
+        
+        
+        
+        
+
+        <div class="form-row">
+    <p:outputLabel for="compte" value="N° du compte:" style="width: 120px;" />
+<h:selectOneMenu id="compte" value="#{DemandeBean.numeroCompte}" styleClass="wide-dropdown">
+    <f:selectItem itemLabel="Choisir votre compte" itemValue="" />
+    <f:selectItems value="#{DemandeBean.numerosComptes}" />
+    
+    <p:ajax event="change" listener="#{DemandeBean.onCompteSelect}" update="dateOuverture devise" process="@this" />
+</h:selectOneMenu>
+
+<p:outputLabel for="devise" value="Devise:" styleClass="label" />
+<p:selectBooleanCheckbox id="devise" value="#{DemandeBean.checkBoxDevise}"  disabled="#{DemandeBean.disableDeviseInput}" />
+
+<p:outputLabel for="dateOuverture" styleClass="label">Date d'ouverture:</p:outputLabel>
+<p:calendar id="dateOuverture" value="#{DemandeBean.dateOuverture}" pattern="dd/MM/yyyy" showOn="button"   disabled="#{DemandeBean.disableDateOuvertureInput}" />
+
+  </div>
+
+
+
+
+        <div class="form-row">
+            <p:outputLabel for="dateNaissance" value="Date de naissance:" styleClass="label" />
+            <p:calendar id="dateNaissance" value="#{DemandeBean.dateNaissance}" pattern="dd/MM/yyyy" showOn="button"   disabled="#{DemandeBean.disableDateNaissanceInput}" >
+                <f:validator validatorId="ageValidator" />
+            </p:calendar>
+            <p:message for="dateNaissance" style="color: red;" />
+
+
+
+
+            <p:outputLabel for="situationFamiliale" value="Situation familiale:" styleClass="label" />
+            <p:inputText id="situationFamiliale" value="#{DemandeBean.situationFamiliale}" required="true" requiredMessage="La situation familiale est obligatoire !"
+                         validatorMessage="Le est trop court."   disabled="#{DemandeBean.disableSituationInput}" >
+                <p:ajax event="blur" update="situationFamilialeMessage" />
+                <f:validateLength minimum="5" maximum="20" />
+                <f:validateRegex pattern="^[^0-9]+$" />
+            </p:inputText>
+            <p:message id="situationFamilialeMessage" for="situationFamiliale" style="color: red;" />
+        </div>
+            </fieldset>
+            
+            
+
+<fieldset>
+    <legend>Dossier crédit</legend>
+
+    <div class="form-row">
+       <p:outputLabel for="typeCredit" value="Type de crédit" style="width: 120px;" />
+       <h:selectOneMenu id="typeCredit" value="#{DemandeBean.selectedTypeCredit}">
+           <f:selectItem itemLabel="Choisir le type de crédit" itemValue="" />
+           <f:selectItems value="#{DemandeBean.typesCredit}" />
+           <p:ajax listener="#{DemandeBean.onTypeCreditSelect}" process="@this" update="nbreEcheances unite" />
+       </h:selectOneMenu>
+
+       <p:outputLabel for="montant" value="Montant:" styleClass="label" />
+       <p:inputText id="montant" value="#{DemandeBean.montant}" required="true" requiredMessage="Le montant est obligatoire !">
+           <f:validateLongRange minimum="0" />
+           <p:ajax event="blur" update="montantMessage" />
+       </p:inputText>
+       <p:message id="montantMessage" for="montant" style="color: red;" />
+   </div>
+
+   <div class="form-row">
+       <p:outputLabel for="unite" value="Unité" style="width: 120px;" />
+       <h:selectOneMenu id="unite" value="#{DemandeBean.selectedUnite}">
+           <f:selectItem itemLabel="Choisir l'unité" itemValue="" />
+           <f:selectItems value="#{DemandeBean.unites}" />
+           <p:ajax listener="#{DemandeBean.onUniteChange}" process="@this" update="nbreEcheances" />
+       </h:selectOneMenu>
+
+       <p:outputLabel for="nbreEcheances" value="Nombre d'échéances" style="width: 120px;" rendered="#{DemandeBean.nbreEcheances != null}" />
+       <h:outputText id="nbreEcheances" value="#{DemandeBean.nbreEcheances}" rendered="#{DemandeBean.nbreEcheances != null}" />
+   </div>
+</fieldset>
+
+
+
+<fieldset>
+    <legend>Suivi</legend>
+    <div class="form-row">
+        <label for="dateRelation" style="width: 120px;">Entré en relation le:</label>
+        <p:calendar id="dateRelation" value="#{DemandeBean.dateRelation}" pattern="dd/MM/yyyy" style="flex: 1;" showOn="button" />
+
+        <label for="par" style="margin-left: 20px;">Par:</label>
+        <h:inputText id="par" value="#{DemandeBean.par}" style="flex: 1;" />
+    </div>
+
+</fieldset>
+
+
+ <fieldset>
+    <legend>Pièces jointes</legend>
+
+ <h:panelGroup id="documentsPanel">
+ 
+ 
+  <p:dataTable value="#{DemandeBean.documents}" var="document">
+    <p:column headerText="Nom du document">
+        #{document.nomDocument}
+    </p:column>
+
+</p:dataTable>
+
+</h:panelGroup>
+
+    
+
+
+<div>
+<h:form enctype="multipart/form-data" style="width:500px">
+				<p:growl id="msg"></p:growl>
+				<p:fileUpload value="#{DemandeBean.file}" mode="advanced" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+								fileUploadListener="#{DemandeBean.fileUploadListener}" update="msg"></p:fileUpload>
+		</h:form>
+</div>
+</fieldset>
+
+
+
+
+            <fieldset>
+                <legend>Observation</legend>
+                <h:inputTextarea rows="5" value="#{DemandeBean.observation}" style="width: 100%;" />
+            </fieldset>
+            
+            
+
+  </h:form>
+
+
+
+            <div class="button-container">
+                <h:commandButton value="Enregistrer" />
+                <h:commandButton value="Initialiser" type="reset" />
+            </div>
+      
+    </div>
+</h:body>
+</html>

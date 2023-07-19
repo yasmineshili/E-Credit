@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                             http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         id="WebApp_ID" version="2.5">
+
+    <display-name>DemandeEcredit</display-name>
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>index.htm</welcome-file>
+        <welcome-file>default.html</welcome-file>
+        <welcome-file>default.jsp</welcome-file>
+        <welcome-file>default.htm</welcome-file>
+    </welcome-file-list>
+
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+      
+    </servlet>
+    
+    <filter>
+    <filter-name>PrimeFaces FileUpload Filter</filter-name>
+    <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+    <init-param>
+        <param-name>thresholdSize</param-name>
+        <param-value>4096</param-value> <!-- Taille du buffer en octets (4 Ko) -->
+    </init-param>
+    <init-param>
+        <param-name>uploadDirectory</param-name>
+        <param-value>/DemandeEcredit/src/main/webapp/uploads/</param-value> <!-- Chemin vers le répertoire de destination -->
+    </init-param>
+    <init-param>
+        <param-name>uploadMaxFileSize</param-name>
+        <param-value>4000000</param-value> <!-- Taille maximale des fichiers en octets (4 Mo) -->
+    </init-param>
+    <init-param>
+        <param-name>uploadFileMaxSize</param-name>
+        <param-value>4000000</param-value> <!-- Taille maximale totale des fichiers en octets (4 Mo) -->
+    </init-param>
+    <init-param>
+        <param-name>uploadRequestSize</param-name>
+        <param-value>4000000</param-value> <!-- Taille maximale de la requête en octets (4 Mo) -->
+    </init-param>
+</filter>
+
+<filter-mapping>
+    <filter-name>PrimeFaces FileUpload Filter</filter-name>
+    <servlet-name>Faces Servlet</servlet-name>
+</filter-mapping>
+    
+  <servlet>
+    <servlet-name>Faces Servlet1</servlet-name>
+    <servlet-class>com.example.security.CustomFacesServlet</servlet-class>
+</servlet>
+    <servlet>
+    <servlet-name>PrimeFaces Servlet</servlet-name>
+    <servlet-class>org.primefaces.webapp.PrimeFacesServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>PrimeFaces Servlet</servlet-name>
+    <url-pattern>/primefaces/*</url-pattern>
+</servlet-mapping>
+ 
+    
+    <servlet>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/applicationContext.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    
+ 
+
+
+
+<filter-mapping>
+    <filter-name>PrimeFaces FileUpload Filter</filter-name>
+    <servlet-name>Faces Servlet</servlet-name>
+</filter-mapping>
+    
+
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>client</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>resources.application</param-value>
+    </context-param>
+    
+  <!--     <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+  -->
+    <listener>
+        <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+    </listener>
+
+</web-app>

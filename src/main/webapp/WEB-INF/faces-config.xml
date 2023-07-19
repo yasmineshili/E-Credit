@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+              version="2.2">
+
+     
+            <validator>
+                <validator-id>ageValidator</validator-id>
+                <validator-class>Bean.validateAge</validator-class>
+            </validator>
+
+            <validator>
+                <validator-id>emailValidator</validator-id>
+                <validator-class>Bean.EmailValidator</validator-class>
+            </validator>
+       
+
+    <navigation-rule>
+        <from-view-id>/Login.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/Demande.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <managed-bean>
+        <managed-bean-name>loginBean</managed-bean-name>
+        <managed-bean-class>Bean.LoginBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>utilisateurService</property-name>
+            <value>#{utilisateurServiceImpl}</value>
+        </managed-property>
+    </managed-bean>
+    
+    <managed-bean>
+    <managed-bean-name>sessionManager</managed-bean-name>
+    <managed-bean-class>Bean.SessionManager</managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+</managed-bean>
+
+ <managed-bean>
+    <managed-bean-name>DemandeBean</managed-bean-name>
+    <managed-bean-class>Bean.DemandeBean</managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+</managed-bean>
+    
+
+    <managed-bean>
+        <managed-bean-name>utilisateurServiceImpl</managed-bean-name>
+        <managed-bean-class>Service.UtilisateurServiceImpl</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+    
+     <managed-bean>
+        <managed-bean-name>CompteServiceImpl</managed-bean-name>
+        <managed-bean-class>Service.CompteServiceImpl</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+    
+      <managed-bean>
+        <managed-bean-name>DemandeServiceImpl</managed-bean-name>
+        <managed-bean-class>Service.DemandeServiceImpl</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+
+</faces-config>

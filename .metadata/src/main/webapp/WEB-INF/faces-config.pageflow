@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf16871570406530" configfile="/DemandeEcredit/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="Login.xhtml" id="pf16878668016613" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf16878668016614" path="/Login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Demande.xhtml" id="pf16878668016615" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf16878668016614" path="/Demande.xhtml"/>
+  <links id="pf16878668016614" target="pf16878668016615" source="pf16878668016613" outcome="success"/>
+</pageflow:Pageflow>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Page Administrateur</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .logout-bar {
+            background-color: #f2f2f2;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout-bar .user-name {
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .logout-bar .logout-button {
+            background-color: #f44336;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .logout-bar .logout-button:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <div class="logout-bar">
+            <h:outputText styleClass="user-name" value="Bienvenue, #{loginBean.email}" />
+            <h:form>
+                <h:commandButton styleClass="logout-button" value="Déconnexion" action="#{loginBean.logout}" />
+            </h:form>
+        </div>
+        <h1>Bienvenue, Administrateur !</h1>
+        <p>Ceci est la page réservée aux administrateurs.</p>
+    </div>
+</h:body>
+
+</html>

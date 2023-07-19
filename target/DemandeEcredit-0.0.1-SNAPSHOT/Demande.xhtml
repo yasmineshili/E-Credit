@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">     
+<h:head>
+    <meta charset="UTF-8"/>
+    <h:outputStylesheet library="primefaces" name="primefaces.css" />
+    
+    <title>Demande de crédit</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        fieldset {
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+
+        legend {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .form-row label {
+            width: 150px;
+            font-weight: bold;
+        }
+
+        .form-row input,
+        .form-row select {
+            flex: 1;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .attachment-icon {
+            font-size: 18px;
+            color: #999;
+            cursor: pointer;
+        }
+
+        .attachment-icon:hover {
+            color: #555;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        .logout-bar {
+            background-color: #f2f2f2;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout-bar .user-name {
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .logout-bar .logout-button {
+            background-color: #f44336;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .logout-bar .logout-button:hover {
+            background-color: #d32f2f;
+        }
+        
+        .flex-1 {
+            flex: 1;
+        }
+    </style>
+</h:head>
+<h:body>
+    <div class="container">
+        <div class="logout-bar">
+            <h:outputText styleClass="user-name" value="Bienvenue, #{loginBean.email}" />
+            <h:form>
+                <h:commandButton styleClass="logout-button" value="Déconnexion" action="#{loginBean.logout}" />
+            </h:form>
+        </div>
+        <h1>Demande de crédit</h1>
+        <h:form>
+<h:messages globalOnly="true" style="color: red; display: block;" />
+
+
+            <div class="form-row">
+               
+    <label for="cin" style="width: 80px;">N° CIN</label>
+    <h:inputText id="cin" value="#{DemandeBean.cin}" validatorMessage="Le numéro de CIN doit contenir 8 chiffres et être positif">
+        <f:validateLength minimum="8" maximum="8" />
+        <f:validateRegex pattern="\d+" />
+        <f:ajax event="keyup" listener="#{DemandeBean.onCinSelect}" render="nom prenom dateNaissance situationFamiliale" />
+    </h:inputText>
+
+    <h:message for="cin" style="color: red;" />
+
+
+   
+    <p:outputLabel for="nom" styleClass="label">Nom </p:outputLabel>
+    <p:inputText id="nom" value="#{DemandeBean.nom}" required="true" requiredMessage="Le nom est obligatoire !"
+                 validatorMessage="Le nom est trop court." >
+                 
+                  <f:validateLength minimum="3" maximum="20" />
+                        <f:validateRegex pattern="^[^0-9]+$" />
+                        
+                        </p:inputText>
+                            <h:message for="nom" style="color: red;" />
+                        
+
+    <p:outputLabel for="prenom" styleClass="label">Prénom </p:outputLabel>
+    <p:inputText id="prenom" value="#{DemandeBean.prenom}" required="true" requiredMessage="Le prénom est obligatoire !"
+                 validatorMessage="Le prénom est trop court." >
+                 
+                  <f:validateLength minimum="3" maximum="20" />
+                        <f:validateRegex pattern="^[^0-9]+$" />
+                        </p:inputText>
+                 
+                     <h:message for="prenom" style="color: red;" />
+                 
+</div>
+
+                  <div class="form-row">
+                    <label for="compte" style="width: 120px;">N° du compte:</label>
+                    <h:selectOneMenu id="compte" value="#{DemandeBean.compte}" style="flex: 1;">
+                        <f:selectItem itemValue="compte1" itemLabel="Compte 1"/>
+                        <f:selectItem itemValue="compte2" itemLabel="Compte 2"/>
+                        <f:selectItem itemValue="compte3" itemLabel="Compte 3"/>
+                    </h:selectOneMenu>
+                    <h:selectBooleanCheckbox id="compteCheckbox" value="#{DemandeBean.compteCheckbox}"/>
+                    <label for="dateOuverture" style="margin-left: 20px;">Date d'ouverture:</label>
+                    <h:inputText id="dateOuverture" value="#{DemandeBean.dateOuverture}" style="flex: 1;"/>
+                  </div>
+  
+<div class="form-row">
+    <p:outputLabel for="dateNaissance" styleClass="label">Date de naissance </p:outputLabel>
+    <p:calendar id="dateNaissance" value="#{DemandeBean.dateNaissance}" pattern="dd/MM/yyyy" showOn="button" >
+    
+    <f:validator validatorId="ageValidator" />
+    </p:calendar>
+    <h:message for="dateNaissance" style="color: red;" />
+
+
+
+    <p:outputLabel for="situationFamiliale" styleClass="label">Situation familiale </p:outputLabel>
+    <p:inputText id="situationFamiliale" value="#{DemandeBean.situationFamiliale}" required="true" requiredMessage="La situation familiale est obligatoire !"
+                 validatorMessage="Le est trop court." >
+                 
+                  <f:validateLength minimum="5" maximum="20" />
+                        <f:validateRegex pattern="^[^0-9]+$" />
+                        </p:inputText>
+                            <h:message for="situationFamiliale" style="color: red;" />
+                        
+</div>
+
+
+
+
+
+
+
+            <div class="button-container">
+                <h:commandButton value="Enregistrer" />
+                <h:commandButton value="Initialiser" type="reset" />
+            </div>
+        </h:form>
+    </div>
+</h:body>
+</html>
