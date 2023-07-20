@@ -1,5 +1,6 @@
 package Entite;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.*;
@@ -12,11 +13,17 @@ public class DemandeCredit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    @ManyToOne
+    private LocalDate dateCredit;
+    
+    /*NB : should be an enumeration just put is string for speed of dev*/
+    /*Possible Values :  En cours,Valide,Rejete*/
+    private String etat;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_COMPTE")
     private Compte compte;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_TYPE_CREDIT")
     private Type_Credit typeCredit;
     
@@ -24,12 +31,12 @@ public class DemandeCredit {
     @Min(value = 0, message = "Le montant doit être un entier positif")
     private Integer montant;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_UNITE")
     private Unite unite;
     
     
-    @OneToMany(mappedBy = "demandeCredit", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "demandeCredit", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     private List<PieceJointe> piecesJointes;
 
     
@@ -113,6 +120,22 @@ public class DemandeCredit {
     public void setPiecesJointes(List<PieceJointe> piecesJointes) {
         this.piecesJointes = piecesJointes;
     }
+
+	public LocalDate getDateCredit() {
+		return dateCredit;
+	}
+
+	public void setDateCredit(LocalDate dateCredit) {
+		this.dateCredit = dateCredit;
+	}
+
+	public String getEtat() {
+		return etat;
+	}
+
+	public void setEtat(String etat) {
+		this.etat = etat;
+	}
 
     
 }

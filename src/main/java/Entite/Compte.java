@@ -81,4 +81,11 @@ public class Compte {
     public void setIdClient(int idClient) {
         this.idClient = idClient;
     }
-}
+    public Client getClient() {
+        return client;
+    }
+    public void setClient(Client client) {
+        this.client=client;
+    }
+    }
+

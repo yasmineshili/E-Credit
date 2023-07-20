@@ -51,8 +51,8 @@ public class ClientServiceImpl implements ClientService {
 
     private Connection getConnection() throws SQLException {
         String url = "jdbc:oracle:thin:@localhost:1521:xe";
-        String username = "stage";
-        String password = "stage";
+        String username = "Stage";
+        String password = "Stage";
         return DriverManager.getConnection(url, username, password);
     }
 }

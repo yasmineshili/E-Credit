@@ -59,6 +59,54 @@
         <h1>Bienvenue, Administrateur !</h1>
         <p>Ceci est la page réservée aux administrateurs.</p>
     </div>
+    <div class="container">
+        <!-- Your existing content here -->
+
+        <h2>List of Demandes:</h2>
+        <h:form>
+    <div class="card">
+        <h:dataTable value="#{AdminBean.demandes}" var="demande" rowKeyVar="index">
+        <h:column>
+                <f:facet name="header">N°</f:facet>
+                <h:outputText value="#{AdminBean.demandes.indexOf(demande) + 1}"/>
+            </h:column>
+        
+         <h:column>
+        	 
+                <f:facet name="header">ID Demande</f:facet>
+                <h:outputText value="#{demande.id}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nom Client</f:facet>
+                <h:outputText value="#{demande.compte.client.nom}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">Type Crédit</f:facet>
+                <h:outputText value="#{demande.typeCredit.nom_credit}" />
+            </h:column>
+             <h:column>
+                <f:facet name="header">état</f:facet>
+                <h:outputText value="#{demande.etat}" />
+            </h:column>
+             <h:column>
+                <f:facet name="header">Date Demande</f:facet>
+                <h:outputText value="#{demande.dateCredit}" />
+            </h:column>
+             <h:column>
+                <f:facet name="header">Actions</f:facet>
+                <h:commandButton value="Valider"
+                action="#{AdminBean.AccepterCredit(demande)}" />
+                <h:commandButton value="Rejeter"
+                action="#{AdminBean.RejeterCredit(demande)}" />
+                 <h:outputFormat rendered="#{demande.etat=='En cours'}" value="holla"/>
+        <h:outputFormat rendered="#{demande.etat!='En cours'}" value="not holla"/>
+            </h:column>
+
+        </h:dataTable>
+        </div>
+</h:form>
+
+    </div>
 </h:body>
 
 </html>
