@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'
+      xmlns:h='http://xmlns.jcp.org/jsf/html'
+      xmlns:f='http://xmlns.jcp.org/jsf/core'
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p='http://primefaces.org/ui'>
+
+<f:metadata>
+          <f:event type="preRenderView" listener="#{DemandeViewBean.populateView}"/>
+      </f:metadata>
+<h:head>
+    <title>Beautiful Card</title>
+    <style>
+    .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Adjust as needed to center vertically */
+        }
+    
+        /* Styling for the card */
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #f8f8f8;
+            padding: 20px;
+            width: 300px;
+            margin: 20px;
+        }
+
+        /* Styling for the property list */
+        .property-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .property-item {
+            margin-bottom: 10px;
+        }
+
+        .property-name {
+            font-weight: bold;
+        }
+
+        .property-value {
+            color: #555;
+        }
+    </style>
+</h:head>
+<h:body>
+    <h:form>
+    
+        <div class="card">
+            <h1>Details Demande</h1>
+            <ul class="property-list">
+                <li class="property-item">
+                    <span class="property-name">Etat:</span>
+                    <span class="property-value" >#{DemandeViewBean.demande.etat}</span>
+                </li>
+                <li class="property-item">
+                    <span class="property-name">Montant:</span>
+                    <span class="property-value">#{DemandeViewBean.demande.montant}</span>
+                </li>
+                <!-- Add more properties here -->
+            </ul>
+        </div>
+    
+    </h:form>
+</h:body>
+
+</html>

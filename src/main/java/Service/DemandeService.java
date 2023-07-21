@@ -17,5 +17,6 @@ public interface DemandeService {
 	 public DemandeCredit serializeDemande(ResultSet resultSet);
 	 public void accepterDemande(int idDemande) ;
 	 public void rejeterDemande(int idDemande);
+	 DemandeCredit getDemande(int id);
 }
 

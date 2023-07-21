@@ -60,6 +60,18 @@ public void rejeterDemande(int idDemande) {
 		
 	
 	}
+	@Override
+	public DemandeCredit getDemande(int id) {
+		List<DemandeCredit> demandes = getAllDemandedServices();
+	    DemandeCredit demande = new DemandeCredit();
+	    for (DemandeCredit d : demandes) {
+	        if (d.getId() == id) {
+	        	demande=d;
+	        }
+	    }
+	    return demande;
+		
+	}
 	  public List<DemandeCredit> getAllDemandedServices() {
 	        List<DemandeCredit> demandes = new ArrayList<>();
 
