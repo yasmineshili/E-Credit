@@ -33,7 +33,7 @@ public class DemandeServiceImpl implements DemandeService {
 		try {
 	        connection = getConnection();
 		String sql = "UPDATE DEMANDECREDIT " +
-	            "SET ETAT = 'Rejete' WHERE id ="+String.valueOf(idDemande);
+	            "SET ETAT = 'Valide' WHERE id ="+String.valueOf(idDemande);
 	    statement = connection.createStatement();
 	    statement.executeUpdate(sql);
      
@@ -50,7 +50,7 @@ public void rejeterDemande(int idDemande) {
 		try {
 	        connection = getConnection();
 		String sql = "UPDATE DEMANDECREDIT " +
-	            "SET ETAT = 'Valide' WHERE id ="+String.valueOf(idDemande);
+	            "SET ETAT = 'Rejete' WHERE id ="+String.valueOf(idDemande);
 	    statement = connection.createStatement();
 	    statement.executeUpdate(sql);
      
@@ -82,7 +82,7 @@ public void rejeterDemande(int idDemande) {
 	        try {
 	            connection = getConnection();
 
-	            String sql = "SELECT d.id,cl.NOM, d.montant, d.NBRE_ECHEANCE,c.id_client,d.ID_COMPTE,c.ID_CLIENT,d.ID_TYPE_CREDIT,d.ID_UNITE,u.NOM_UNITE,tc.NOM_CREDIT,c.DATE_OUVERTURE,c.DEVISE,cl.CIN,cl.DATE_NAISSANCE,cl.NOM,cl.PRENOM,cl.SITUATION_FAMILIALE,d.DATECREDIT,d.ETAT FROM DEMANDECREDIT d "
+	            String sql = "SELECT d.id,cl.NOM, d.montant, d.NBRE_ECHEANCE,c.id_client,d.ID_COMPTE,c.ID_CLIENT,d.ID_TYPE_CREDIT,d.ID_UNITE,u.NOM_UNITE,tc.NOM_CREDIT,c.DATE_OUVERTURE,c.DEVISE,cl.CIN,cl.DATE_NAISSANCE,cl.NOM,cl.PRENOM,cl.SITUATION_FAMILIALE,d.DATECREDIT,d.ETAT,tc.TAUX_CREDIT FROM DEMANDECREDIT d "
 	            		+
 	                    "JOIN COMPTE c ON d.ID_COMPTE = c.ID "
 			            +
@@ -149,6 +149,8 @@ public void rejeterDemande(int idDemande) {
         Type_Credit typecredit = new Type_Credit();
         typecredit.setId(resultSet.getInt("ID_TYPE_CREDIT"));
         typecredit.setNom_credit(resultSet.getString("NOM_CREDIT"));
+        /*--------*/
+        typecredit.setTaux_credit(resultSet.getFloat("TAUX_CREDIT"));
         demande.setTypeCredit(typecredit);
         /*-------------*/
         
